@@ -290,3 +290,30 @@ Screenshots for all are in `demo/demo_output_samples/`.
 3. All logic works offline (no API keys required).  
 
 ### **Optional: Local**
+
+---
+
+# 📦 8. Limitations & Future Work
+- Current MCQ generator is stubbed; replace with Gemini/OpenAI in 5 minutes.  
+- Deployment to Cloud Run/Agent Engine is documented but not executed (cost-saving).  
+- Free-text grading uses fuzzy matching; future improvement could use rubric scoring.
+
+---
+
+# 🔐 9. Safety & Reproducibility
+- No API keys included.  
+- Stubs ensure the entire system is deterministic and reproducible for judges.  
+- All demo outputs were generated inside Kaggle and exported for transparency.
+
+---
+
+# 🧩 10. Submission Assets
+- **Kaggle Notebook:** https://www.kaggle.com/code/devxtreme/examace-ai-agent  
+- **Video:** *ADD LINK HERE*  
+- **GitHub Repo:** *this repo*  
+
+---
+
+# 👤 Contact
+Created by Dev — student developer.  
+For reproduction or evaluation, run the Kaggle notebook.
