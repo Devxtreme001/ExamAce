@@ -1,68 +1,151 @@
-# StudyAgent — Capstone Project (Agents for Good — Education)
+# StudyAgent (ExamAce) — Capstone Project  
+**Track:** Agents for Good — Education
 
-**One-line:** StudyAgent is a multi-agent AI study coach that builds prioritized study plans, generates targeted MCQs with explanations, administers tests, auto-grades answers, and adapts future learning using long-term memory — with full observability for evaluation.
+**One-line summary:**  
+StudyAgent is a multi-agent AI study coach that builds prioritized study plans, generates targeted MCQs with explanations, administers tests, auto-grades performance, and adapts learning paths using long-term memory — with full observability for evaluation.
 
-## Track
-Agents for Good — Education
+---
 
-## Elevator pitch (why it matters)
-Students preparing for high-stakes exams waste time on unfocused study and low-quality practice. StudyAgent reduces wasted effort by customizing study plans, producing high-quality practice questions, measuring mastery, and adapting future revision — so students get targeted practice where it matters most.
+# 🎯 1. Why this project matters
+Students preparing for high-stakes board exams waste enormous time on unfocused studying and low-quality practice questions. This leads to low retention, poor prioritization, and high stress.
 
-## What this repo contains
-- `src/` — core agent code (Planner, Content, Evaluator, Orchestrator, MemoryBank, Tools)
-- `notebook/demo_notebook.ipynb` — runnable Kaggle notebook demo with inline docs and screenshots
-- `docs/video_script.md` — ready-to-record 2-3 minute demo script
-- `README.md` — this file
-- `demo/demo_output_samples/` — saved logs, memory dumps, and screenshots
+**StudyAgent directly solves this** by:
+- Detecting weak topics  
+- Prioritizing them in the study plan  
+- Generating targeted practice questions  
+- Measuring mastery  
+- Adapting training over time  
 
-## Features implemented (mapping to judging rubric)
-- **Multi-agent system**: Planner (sequential), Content (parallel workers), Evaluator (loop agent). (A2A messaging implemented.)
-- **Tools**: Code execution tool (auto-grader); Search tool stub (for citations). Custom MCQ generator wrapper.
-- **Sessions & Memory**: InMemorySessionService and MemoryBank (long-term).
-- **Long-running ops**: Demonstrated pause/resume via session state in notebook.
-- **Context engineering**: Context compaction routine storing top 5 weak topics.
-- **Observability**: Structured logs and metrics (pandas DataFrame printed in notebook).
-- **Agent evaluation**: Evaluator provides before/after metrics and exports a metrics CSV.
+The result: faster improvement, focused practice, and measurable progress.
 
-> Note: Gemini placeholders included; if you have Gemini keys, follow the README to plug them in. **No API keys are included in the repo.**
+---
 
-## Quick demo (what judges will see)
-1. Input: sample user profile + chapter text.  
-2. Planner builds a 7-day plan prioritizing weak topics.  
-3. Content agent generates 20 MCQs with explanations (parallel).  
-4. Evaluator administers 10-question mini-test, auto-grades, updates MemoryBank.  
-5. Notebook shows memory before/after, logs, and metrics dashboard.
+# 🧠 2. Why AGENTS (required in the pitch)
+Agents are not just a “cool architecture.” They are the only structure that handles this workflow cleanly:
 
-## How to run (Kaggle notebook recommended)
-1. Clone repo.  
-2. Open `notebook/demo_notebook.ipynb` on Kaggle. (All cells are runnable without API keys due to safe stubs.)  
-3. Run cells top-to-bottom. Replace stub LLM calls with Gemini/LLM API by setting environment variables (see below).
+### **Planner Agent**
+- Decides *what* the student should study next  
+- Orders topics by weakness  
+- Creates multi-day plans  
+- Sequential decision-making → fits a planner agent perfectly  
 
-## Files & what matters
-- `src/planner_agent.py` — plan generation and prioritization logic.
-- `src/content_agent.py` — MCQ + summary generation (LLM stub).
-- `src/evaluator_agent.py` — mock test runner + auto-grader (code execution tool).
-- `src/memory_bank.py` — persistent memory interface (JSON in demo).
-- `src/orchestrator.py` — A2A message bus orchestrator used in demo.
-- `notebook/demo_notebook.ipynb` — the full demo for judges.
+### **Content Agent**
+- Generates MCQs and explanations in parallel  
+- Stateless generation tasks → ideal for parallel agents  
 
-## How this meets scoring categories (explicit)
-- **Category 1: Pitch** — Problem, solution, value are documented in this README + docs/architecture.md.
-- **Category 2: Implementation** — Code is modular, commented, includes session/memory, observability, and agent communication.
-- **Bonus** — Gemini placeholders for Planner & Content agents (5 points), deployment notes included in docs/ (5 points), and video_script.md for a <3min video (10 points).
+### **Evaluator Agent**
+- Administers tests  
+- Grades answers deterministically  
+- Updates long-term memory  
+- Needs a loop (until mastery) → perfect for loop agent  
 
-## Limitations & future work
-- Current notebook uses LLM stubs for offline demo; swap in a real LLM for live behavior.
-- Deployment to Agent Engine or Cloud Run is documented but not executed (to avoid costs).
-- Grading for long free-text answers is basic (fuzzy matching); future work: rubric-based scoring.
+### **Orchestrator**
+- Passes A2A messages between agents  
+- Logs everything  
+- Produces a transparent, inspectable workflow  
 
-## Reproducibility & safety
-- No keys in repo. Use environment variables to provide keys if you have them. Kaggle demo runs with stubs and is fully reproducible.
+Agents give the system *structure, delegation, and explainability*.  
+This is exactly what the rubric is looking for.
 
-## Submission assets
-- Kaggle notebook link (add here)
-- GitHub repo link (add here)
-- Video (≤3min) — use `docs/video_script.md` to record
+---
 
-## Contact
-Project by Dev (student). For quick reproduction help, open the demo notebook and run all cells.
+# 🔗 3. Live Demo & Links
+- **Kaggle notebook (runnable demo):**  
+  https://www.kaggle.com/code/devxtreme/examace-ai-agent
+
+- **YouTube video (≤3 min):**  
+  *ADD HERE AFTER RECORDING*
+
+- **GitHub repo:**  
+  *This repo*
+
+---
+
+# 🗂️ 4. Repo Contents
+- `notebook/demo_notebook.ipynb`  
+  Full end-to-end demo: planner → MCQ generation → evaluator → memory dump → metrics → logs.
+
+- `src/` (optional auxiliary code)  
+  - Planner, Content, Evaluator  
+  - Orchestrator  
+  - MemoryBank  
+  - Tools (CodeExec + Search Stub)
+
+- `demo/demo_output_samples/`  
+  Screenshots and exported logs/metrics from running the notebook on Kaggle.
+
+- `docs/architecture.md`  
+  Architecture diagram (ASCII + PNG)
+
+- `docs/video_script.md`  
+  Script used for the 2–3 minute video submission.
+
+---
+
+# ⚙️ 5. Full Feature Checklist (mapping to rubric)
+
+### ✅ Multi-Agent System  
+(Required feature)  
+- Planner Agent — *notebook Cell 8*  
+- Content Agent — *Cell 10–11*  
+- Evaluator Agent — *Cell 12–13*  
+- Agents communicate via A2A protocol — *Cell 4*
+
+### ✅ Tools  
+- Code Execution Tool (auto-grader) — *Cell 14*  
+- Search Tool Stub — *Cell 14*  
+- Custom MCQ Generator Wrapper — *Cell 10*
+
+### ✅ Sessions & Memory  
+- InMemorySessionService — *Cell 6*  
+- MemoryBank (long-term learning state) — *Cell 6*
+
+### ✅ Long-running Operations  
+- Session state persists; demonstration of pause/resume — *Cell 18* (session creation + state storage)
+
+### ✅ Context Engineering  
+- Weak-topic compaction stored in MemoryBank — *Cell 12*  
+
+### ✅ Observability  
+- Structured logs (`logs.json`) — *Cell 25*  
+- Metrics DataFrame (`metrics.csv`) — *Cell 25–27*
+
+### ✅ Agent Evaluation  
+- Evaluator computes before/after accuracy  
+- Updates weakness scores  
+- Saves performance history — *Cell 12 + Cell 25*
+
+### ⭐ Bonus (documented)
+- Gemini placeholders for Planner + Content — *Cell 31*  
+- Deployment notes included in docs — *docs/ folder*  
+- Video (≤3min) — *pending*
+
+---
+
+# 🧪 6. Quick Demo (What judges will see)
+1) **Planner output**  
+Generates 3-day focused plan prioritizing weak topics.
+
+2) **MCQ generation**  
+Creates 20 MCQs with explanations (parallel threads).
+
+3) **Mini-test**  
+10-question test graded automatically.
+
+4) **Memory update**  
+Weak topics boosted; history appended.
+
+5) **Observability**  
+Logs + metrics saved and displayed.
+
+Screenshots for all are in `demo/demo_output_samples/`.
+
+---
+
+# 🚀 7. How to Run
+### **Preferred: Kaggle**
+1. Open the notebook.  
+2. Run all cells top-to-bottom.  
+3. All logic works offline (no API keys required).  
+
+### **Optional: Local**
